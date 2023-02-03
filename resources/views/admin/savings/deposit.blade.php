@@ -26,20 +26,25 @@
             <div class="card-body">
                 <div class="row mt-2">
                     <div class="media">
-                        <img src="{{ url('/storage/members/images/'.$member->thumbnail) }}" class="img-thumbnail mt-3" alt="user-image">
+                        @isset($member->photo)
+                        <img src="{{ url('/storage/members/images/'.$member->thumbnail) }}" class="img-thumbnail mt-3" alt="user-image" width="300" height="300">
+                        @else
+                        <img src="{{ url('/images/default.jpg') }}" class="img-thumbnail mt-3" alt="user-image" width="300" height="300">
+                        @endisset
                         <div class="media-body align-self-start ms-3 text-truncate">
                             <h3 class="my-0 fw-bold">{{ $member->name }} ({{ $member->gender == 'male' ? 'L' : 'P' }}) </h3>
                             <p class="text-muted mb-2 font-13">{{ $member->address }}</p>
-                            @if($member->saving_category[0]->name == 'gold')
-                            <button type="button" class="btn btn-sm btn-soft-warning">{{ ucfirst($member->saving_category[0]->name) }}</button>
-                            @elseif($member->saving_category[0]->name == 'silver')
-                            <button type="button" class="btn btn-sm btn-soft-secondary">{{ ucfirst($member->saving_category[0]->name) }}</button>
-                            @elseif($member->saving_category[0]->name == 'blue')
-                            <button type="button" class="btn btn-sm btn-soft-primary">{{ ucfirst($member->saving_category[0]->name) }}</button>
+                            @if($member->category == 'gold')
+                            <button type="button" class="btn btn-sm btn-soft-warning">{{ ucfirst($member->category) }}</button>
+                            @elseif($member->category == 'silver')
+                            <button type="button" class="btn btn-sm btn-soft-secondary">{{ ucfirst($member->category) }}</button>
+                            @elseif($member->category == 'blue')
+                            <button type="button" class="btn btn-sm btn-soft-primary">{{ ucfirst($member->category) }}</button>
                             @else
-                            <button type="button" class="btn btn-sm btn-soft-success">{{ ucfirst($member->saving_category[0]->name) }}</button>
+                            <button type="button" class="btn btn-sm btn-soft-success">{{ ucfirst($member->category) }}</button>
                             @endif
-                            <form action="" method="post">
+                            <form action="/admin/saving/deposit/{{$member->id}}" method="post">
+                                @csrf
                                 <div class="row mt-5">
                                     <div class="col-3">
                                         <label for="saldo">
@@ -47,10 +52,10 @@
                                         </label>
                                     </div>
                                     <div class="col-6">
-                                        @isset($member->savings[0]->saldo)
-                                        <input type="text" class="form-control form-control-lg" name="saldo" id="saldo" value="Rp. {{ $member->savings[0]->saldo }}" readonly>
+                                        @isset($member->saldo)
+                                        <input type="text" class="form-control" name="saldo" id="saldo" value="Rp. {{ number_format($member->saldo, 0, ',', '.') }}" readonly>
                                         @else
-                                        <input type="text" class="form-control form-control-lg" name="saldo" id="saldo" value="Rp. 0" readonly>
+                                        <input type="text" class="form-control" name="saldo" id="saldo" value="Rp. 0" readonly>
                                         @endisset
                                     </div>
                                 </div>
@@ -61,23 +66,22 @@
                                         </label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="number" class="form-control form-control-lg" name="deposit" id="deposit" value="{{ old('deposit') }}">
+                                        <input type="number" class="form-control" name="debit" id="debit">
                                     </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-6 offset-3 text-end">
-                                        <button class="btn btn-light btn-lg float-start">
+                                        <button class="btn btn-light float-start">
                                             <i class="fas fa-undo"></i> Reset
                                         </button>
-                                        <button class="btn btn-info btn-lg">
+                                        <button type="submit" class="btn btn-info">
                                             <i class="fas fa-paper-plane"></i> Simpan
                                         </button>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
-                        <a href="/admin/saving/" class="btn btn-success btn-lg">Kembali</a>
+                        <a href="/admin/saving/" class="btn btn-success">Kembali</a>
                     </div>
                 </div>
             </div>

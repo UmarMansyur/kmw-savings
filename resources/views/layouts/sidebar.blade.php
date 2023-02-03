@@ -20,36 +20,39 @@
                     <div class="mt-3">
                         <img src="{{ url('/storage/employes/images/' . Auth::user()->thumbnail) }}" alt="" class="rounded-circle d-block mx-auto mb-3" height="140" width="140" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     </div>
-                    @elseif(Auth::user()->thumbnail == null)
-                    <img src="{{ url('/images/users/user-2.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
+                    @elseif(empty(Auth::user()->thumbnail))
+                    <img src="{{ url('/images/default.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     @elseif(request()->session()->get('user')[0]->thumbnail)
                     <img src="{{ url('/storage/members/images/' . request()->session()->get('user')[0]->thumbnail) }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     @elseif(request()->session()->get('user')[0]->thumbnail == null)
-                    <img src="{{ url('/images/users/user-2.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
-                    @endif
+                    <img src="{{ url('/images/default.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
+                    @endisset
                     <span class="text-white" style="font-size: 20px; font-weight:700;">{{ Auth::user() ? Auth::user()->name : request()->session()->get('user')[0]->name  }}</span>
                 </div>
             </li>
             <li class="menu-label mt-4">Main</li>
             <li class="{{request()->path() === 'dashboard' ? 'mm-active' : '' }}">
-                <a href="{{ Auth::user() ? '/admin/dashboard' : '/user/dashoard'  }}">
+                <a href="{{ Auth::user() ? '/admin/dashboard' : '/user/dashboard'  }}">
                     <i data-feather="home" class="align-self-start menu-icon"></i>
                     <span style="font-size: 14px">Dashboard</span>
                 </a>
             </li>
             <li class="menu-label mt-3">Data</li>
+            @isset(Auth::user()->id)
             <li class="mb-2">
                 <a href="/admin/saving">
                     <i data-feather="credit-card" class="align-self-start menu-icon"></i>
                     <span style="font-size: 14px">Tabungan</span>
                 </a>
             </li>
+            @endisset
             <li>
-                <a href="/admin/report">
+                <a href="{{ Auth::user() ? '/admin/report' : '/user/report'  }}">
                     <i data-feather="file-text" class="align-self-start menu-icon"></i>
                     <span style="font-size: 14px">Laporan</span>
                 </a>
             </li>
+            @isset(Auth::user()->id)
             <li class="menu-label mt-3">Settings</li>
             <li>
                 <a href="javascript: void(0);">
@@ -71,6 +74,7 @@
                     </li>
                 </ul>
             </li>
+            @endisset
         </ul>
     </div>
 </div>

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('saving_category_id')->constrained('saving_categories');
+            $table->string('code')->unique();
+            $table->foreignId('saving_category_id')->constrained('saving_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('name');

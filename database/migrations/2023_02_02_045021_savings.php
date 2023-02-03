@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('savings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained('members');
+            $table->foreignId('member_id')->constrained('members')->onDelete('cascade')->onUpdate('cascade');
             $table->double('saldo')->nullable();
             $table->double('debit')->nullable();
             $table->timestamps();

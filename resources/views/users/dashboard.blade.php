@@ -20,16 +20,16 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Karyawan</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Kategori Tabungan</span>
                         <h4 class="mb-3">
                             <span class="counter-value">
-                                {{ $employe }}
+                                {{ ucfirst($saving_category->name) }}
                             </span>
                         </h4>
                     </div>
                     <div class="col-6 text-end">
                         <div class="avatar-lg float-end">
-                            <i class="fas fa-user-tie" style="font-size: xx-large;"></i>
+                            <i class="fas fa-award" style="font-size: xx-large;"></i>
                         </div>
                     </div>
                 </div>
@@ -47,16 +47,16 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Jamaah</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Saldo</span>
                         <h4 class="mb-3">
                             <span class="counter-value">
-                                {{ $jamaah }}
+                                Rp. {{ number_format($saldo[0]->saldo, 0, ',', '.') }}
                             </span>
                         </h4>
                     </div>
                     <div class="col-6 text-end">
                         <div class="avatar-lg float-end">
-                            <i class="fas fa-users" style="font-size: xx-large;"></i>
+                            <i class="fas fa-money-bill-wave" style="font-size: xx-large;"></i>
                         </div>
                     </div>
                 </div>
@@ -74,10 +74,10 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-6">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Setoran Hari Ini</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Rata-Rata Setoran</span>
                         <h4 class="mb-3">
                             <span class="counter-value">
-                                Rp. {{ number_format($debit, 0, ',', '.') }}
+                                Rp. {{ $average }}
                             </span>
                         </h4>
                     </div>

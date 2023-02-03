@@ -30,11 +30,10 @@
                 <table id="datatable" class="table table-bordered dt-responsive mt-5">
                     <thead>
                         <tr class="text-center">
+                            <th style="width: 25%">Kode</th>
                             <th style="width: 25%">Nama Jamaah</th>
-                            <th style="width: 25%">Email</th>
                             <th style="width: 30%;">Alamat</th>
                             <th style="width: 10%;">Level</th>
-                            <th style="width: 10%;">Detail</th>
                             <th style="width: 5%;">Edit</th>
                             <th style="width: 5%;">Hapus</th>
                         </tr>
@@ -42,21 +41,17 @@
                     <tbody>
                         @foreach ($member as $user)
                         <tr>
+                            <td>{{ $user->code }}</td>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ ucfirst($user->saving_category[0]->name) }}</td>
-                            <td>
-                                <a href=""><i class="fas fa-eye"></i></a>
-                            </td>
                             <td class="text-center">
-                                <a href="/admin/setting/add-jamaah?id={{ $user->id }}" class="btn btn-sm btn-warning text-white">
+                                <a href="/admin/setting/add-jamaah?id={{ $user->id }}" class="btn btn-sm btn-outline-warning">
                                     <i class="fas fa-pen"></i>
                                 </a>
-
                             </td>
                             <td class="text-center">
-                                <a href="/admin/setting/jamaah/{{ $user->id }}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="btn btn-sm btn-danger">
+                                <a href="/admin/setting/jamaah/{{ $user->id }}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="btn btn-sm btn-outline-danger">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>

@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             Employe::create([
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('admin'),
-                'name' => 'Admin',
+                'name' => 'Administrator',
                 'role_id' => 1,
                 'address' => 'Rombasan Pragaan Sumenep',
                 'gender' => 'Laki-laki',
@@ -39,14 +39,8 @@ class DatabaseSeeder extends Seeder
                 'thumbnail' => null
             ]);
             $this->call([
-                saving_categories::class,
-                // saving::class,
-                // member::class,
-                // employe::class,
+                saving_categories::class
             ]);
-            // Employe::factory(10)->create();
-            // Member::factory(10)->create();
-            // Saving::factory(10)->create();
         } catch (\Throwable $th) {
            dd($th->getMessage());
         }

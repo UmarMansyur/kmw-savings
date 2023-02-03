@@ -10,20 +10,19 @@ class Member extends Model
     use HasFactory;
     protected $table = 'members';
     protected $fillable = [
+        'code',
         'saving_category_id',
         'email',
         'password',
         'name',
-        'role',
         'address',
         'gender',
         'phone',
         'thumbnail',
         'file'
-
     ];
     protected $hidden = [
-        'password',
+        'password'
     ];
 
     public function saving_category() {

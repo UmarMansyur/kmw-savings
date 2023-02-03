@@ -11,7 +11,6 @@ class Saving extends Model
     protected $table = 'savings';
     protected $fillable = [
         'member_id',
-        'kredit',
         'saldo',
         'debit'
     ];

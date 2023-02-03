@@ -19,7 +19,7 @@ class Authentication extends Controller
                 Session::flush();
                 $request->session()->push('user', $member);
                 notify()->success("Anda berhasil login", 'Berhasil');
-                return redirect('/');
+                return redirect('/user/dashboard');
             } else {
                 if (Auth::attempt($credentials)) {
                     notify()->success('Anda berhasil login', 'Berhasil');

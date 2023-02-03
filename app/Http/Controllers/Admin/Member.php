@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Member as MemberModel;
+use App\Models\Saving;
 use App\Models\SavingCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,11 +34,22 @@ class Member extends Controller
     public function store()
     {
         try {
+            $code = DB::select("SELECT MAX(code) as code FROM members");
+            $year = DB::select("SELECT YEAR(NOW()) as year");
+            $year = $year[0]->year;
+            $bulan = DB::select("SELECT MONTH(NOW()) as month");
+            $bulan = $bulan[0]->month;
             $member = new MemberModel;
+            $member->saving_category_id = request('saving_categories');
+            $member->code = $year . $bulan . request('saving_categories'). 000 . $code[0]->code + 1;
             $member->name = request('name');
             $member->email = request('email');
-            $member->password = Hash::make(request('password'));
-            $member->saving_category_id = request('saving_categories');
+            if (request('password') != request('password_confirmation')) {
+                notify()->error('Password tidak sama');
+                return redirect('/admin/setting/add-jamaah');
+            } else {
+                $member->password = Hash::make(request('password'));
+            }
             $member->address = request('address');
             $member->gender = request('gender');
             $member->phone = request('phone');
@@ -65,6 +78,13 @@ class Member extends Controller
                 $member->thumbnail = $fileName;
             }
             $member->save();
+
+            $saving = new Saving();
+            $saving->member_id = $member->id;
+            $saving->debit = 0;
+            $saving->saldo = 0;
+            $saving->save();
+
             notify()->success('Berhasil menambahkan jamaah baru');
             return redirect('/admin/setting/jamaah');
         } catch (\Throwable $th) {
@@ -79,7 +99,16 @@ class Member extends Controller
             $member = MemberModel::find($id);
             $member->name = request('name');
             $member->email = request('email');
-            $member->password = request('password') ? Hash::make(request('password')) : $member->password;
+            if (request('password') != request('password_confirmation')) {
+                notify()->error('Password tidak sama');
+                return redirect('/admin/setting/add-jamaah');
+            } else {
+                if (request('password')) {
+                    $member->password = Hash::make(request('password'));
+                } else {
+                    $member->password = $member->password;
+                }
+            }
             $member->saving_category_id = request('saving_categories');
             $member->address = request('address');
             $member->gender = request('gender');

@@ -19,9 +19,11 @@ class MemberFactory extends Factory
     {
         $genders = ['male', 'female'];
         return [
+            'code' => $this->faker->unique()->uuid,
+            'role_id' => rand(1, 5),
             'saving_category_id' => rand(1, 3),
             'email' => $this->faker->unique()->safeEmail,
-            'password' => Hash::make('123'),
+            'password' => '123',
             'name' => $this->faker->name,
             'address' =>$this->faker->address,
             'gender' => $genders[rand(0,1)],

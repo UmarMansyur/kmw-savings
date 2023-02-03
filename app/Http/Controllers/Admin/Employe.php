@@ -36,7 +36,12 @@ class Employe extends Controller
             $employe = new EmployeModel;
             $employe->name = request('name');
             $employe->email = request('email');
-            $employe->password = Hash::make(request('password'));
+            if (request('password') != request('password_confirmation')) {
+                notify()->error('Password tidak sama');
+                return redirect('/admin/setting/add-karyawan');
+            } else {
+                $employe->password = Hash::make(request('password'));
+            }
             $employe->role_id = request('role');
             $employe->address = request('address');
             $employe->gender = request('gender');
@@ -48,7 +53,7 @@ class Employe extends Controller
                 $fileName = $fileName[count($fileName) - 1];
                 $employe->thumbnail = $fileName;
             }
-            
+
             $employe->save();
             notify()->success('Berhasil menambahkan karyawan baru');
             return redirect('/admin/setting/karyawan');
@@ -66,7 +71,16 @@ class Employe extends Controller
             $employe = EmployeModel::find($id);
             $employe->name = request('name') ?? $employe->name;
             $employe->email = request('email') ?? $employe->email;
-            $employe->password = request('password') ? Hash::make(request('password')) : $employe->password;
+            if (request('password') != request('password_confirmation')) {
+                notify()->error('Password tidak sama');
+                return redirect('/admin/setting/add-karyawan?id=' . $employe->id . '');
+            } else {
+                if (request('password')) {
+                    $employe->password = Hash::make(request('password'));
+                } else {
+                    $employe->password = $employe->password;
+                }
+            }
             $employe->role_id = request('role') ?? $employe->role;
             $employe->address = request('address') ?? $employe->address;
             $employe->gender = request('gender') ?? $employe->gender;

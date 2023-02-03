@@ -28,7 +28,8 @@
 <script>
     $(document).ready(function() {
         if ($(location).attr('pathname') == '/admin/setting/karyawan' || $(location).attr('pathname') == '/admin/setting/jamaah' || 
-        $(location).attr('pathname') == '/admin/setting/categories') {
+        $(location).attr('pathname') == '/admin/setting/categories' || $(location).attr('pathname') == '/admin/saving' || 
+        $(location).attr('pathname') == '/admin/report' || $(location).attr('pathname') == '/user/report') {
             $('#datatable').DataTable({
                 language: {
                     paginate: {
@@ -67,7 +68,19 @@
                 document.getElementById('password_confirmation').removeAttribute('disabled');
             }
         });
-
+    }
+</script>
+<script>
+    if($(location).attr('pathname') == '/admin/report' || $(location).attr('pathname') == '/user/report') {
+        document.getElementById('typeReport').addEventListener('change', function() {
+            if(this.value == 1) {
+                document.location.href = '/admin/report?type=harian';
+            } else if(this.value == 2) {
+                document.location.href = '/admin/report?type=bulanan';
+            } else if(this.value == 3) {
+                document.location.href = '/admin/report?type=tahunan';
+            }
+        });
     }
 </script>
 @notifyJs

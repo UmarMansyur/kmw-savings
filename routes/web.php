@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\Member;
 use App\Http\Controllers\Admin\Saving;
 use App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Admin\SavingCategory;
+use App\Http\Controllers\User\Dashboard as DashboardUser;
+use App\Http\Controllers\User\Report as ReportUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,11 @@ Route::middleware(['admin'])->group(function() {
     Route::get('/admin/saving', [Saving::class, 'index']);
     Route::get('/admin/saving/preview/{id}', [Saving::class, 'preview']);
     Route::get('/admin/saving/deposit/{id}', [Saving::class, 'deposit']);
+    Route::post('/admin/saving/deposit/{id}', [Saving::class, 'storeDeposit']);
+
     Route::get('/admin/report', [Report::class, 'index']);
 
 });
+
+Route::get('/user/dashboard', [DashboardUser::class, 'index']);
+Route::get('/user/report', [ReportUser::class, 'index']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use App\Models\SavingCategory as ModelsSavingCategory;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,10 @@ class SavingCategory extends Controller
     public function index() {
         try {
             $saving_categories = ModelsSavingCategory::all();
+            
             return view('admin.settings.categories.index', compact('saving_categories'));
         } catch (\Throwable $th) {
-            //throw $th;
+            notify()->error($th->getMessage());
         }
     }
     public function store() {

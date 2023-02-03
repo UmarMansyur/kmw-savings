@@ -16,7 +16,7 @@
         <ul class="metismenu left-sidenav-menu">
             <li>
                 <div class="text-center">
-                    @if(Auth::user()->thumbnail)
+                    @if(isset(Auth::user()->thumbnail))
                     <div class="mt-3">
                         <img src="{{ url('/storage/employes/images/' . Auth::user()->thumbnail) }}" alt="" class="rounded-circle d-block mx-auto mb-3" height="140" width="140" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     </div>

@@ -3,7 +3,13 @@
         <ul class="list-unstyled topbar-nav float-end mb-0">
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <span class="ms-1 nav-user-name hidden-sm text-dark mx-2" style="font-weight: 700;">{{ Auth::user() ? Auth::user()->name : request()->session()->get('user')[0]->name  }}</span>
+                    
+                    @if(!empty(Auth::user()->name))
+                    <span class="ms-1 nav-user-name hidden-sm text-dark mx-2" style="font-weight: 700;">{{ Auth::user()->name  }}</span>
+                    @elseif(empty(Auth::user()->name) && !empty(request()->session()->get('user')[0]->name))
+                    <span class="ms-1 nav-user-name hidden-sm text-dark mx-2" style="font-weight: 700;">{{ request()->session()->get('user')[0]->name }}</span>
+                    @endif
+                    
                     @if(!empty(Auth::user()->thumbnail))
                     <img src="{{ url('/storage/employes/images/' . Auth::user()->thumbnail) }}" alt="" class="rounded-circle thumb-lg" height="140" width="140" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     @elseif(empty(Auth::user()->thumbnail) && empty(request()->session()->get('user')[0]->thumbnail))
@@ -15,6 +21,8 @@
                     @endif
                 </a>
             </li>
+
+
 
             <li class="dropdown mt-3 me-4">
                 <a href="/logout">

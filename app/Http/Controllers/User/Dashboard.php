@@ -8,8 +8,13 @@ use App\Models\SavingCategory as ModelsSavingCategory;
 
 class Dashboard extends Controller
 {
+   
+
     public function index()
     {
+        if (empty(request()->session()->get('user')[0]->id)) {
+            return redirect('/');
+        }
         $saving_category = ModelsSavingCategory::find(request()->session()->get('user')[0]->saving_category_id);
         $saldo = Saving::where('member_id', request()->session()->get('user')[0]->id)->limit(1)->orderBy('id', 'desc')->get();
         $average = Saving::where('member_id', request()->session()->get('user')[0]->id)->avg('debit');

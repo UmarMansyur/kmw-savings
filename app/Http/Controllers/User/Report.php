@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class Report extends Controller
 {
+   
     public function index()
     {
+        if (empty(request()->session()->get('user')[0]->id)) {
+            return redirect('/');
+        }
         if (request()->get('type') == 'harian') {
             $data = Member::join('savings', 'members.id', '=', 'savings.member_id')->where('members.id', '=', request()->session()->get('user')[0]->id)->get();
             return view('admin.reports.index', compact('data'));

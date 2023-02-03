@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Dashboard;
 use App\Http\Controllers\Admin\Employe;
 use App\Http\Controllers\Admin\Member;
+use App\Http\Controllers\Admin\Saving;
+use App\Http\Controllers\Admin\Report;
 use App\Http\Controllers\Admin\SavingCategory;
 
 /*
@@ -36,6 +38,7 @@ Route::middleware(['admin'])->group(function() {
     Route::get('/admin/setting/jamaah', [Member::class, 'index']);
     Route::post('/admin/setting/jamaah', [Member::class, 'store']);
     Route::get('/admin/setting/add-jamaah', [Member::class, 'new']);
+    Route::get('/admin/setting/detail-jamaah/{id}', [Member::class, 'detail']);
     Route::post('/admin/setting/edit-jamaah/{id}', [Member::class, 'update']);
     Route::get('/admin/setting/jamaah/{id}', [Member::class, 'destroy']);
 
@@ -44,5 +47,10 @@ Route::middleware(['admin'])->group(function() {
     Route::get('/admin/setting/add-categories', [SavingCategory::class, 'new']);
     Route::post('/admin/setting/edit-categories', [SavingCategory::class, 'update']);
     Route::get('/admin/setting/categories/{id}', [SavingCategory::class, 'destroy']);
+
+    Route::get('/admin/saving', [Saving::class, 'index']);
+    Route::get('/admin/saving/preview/{id}', [Saving::class, 'preview']);
+    Route::get('/admin/saving/deposit/{id}', [Saving::class, 'deposit']);
+    Route::get('/admin/report', [Report::class, 'index']);
 
 });

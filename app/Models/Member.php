@@ -29,4 +29,8 @@ class Member extends Model
     public function saving_category() {
         return $this->hasMany(SavingCategory::class, 'id', 'saving_category_id');
     }
+
+    public function savings() {
+        return $this->belongsTo(Saving::class, 'id', 'member_id');
+    }
 }

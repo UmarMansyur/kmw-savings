@@ -22,22 +22,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         try {
-            // $roles = ['Admin', 'Ketua', 'Wakil Ketua', 'Bendahara', 'Sekretaris', 'Pembina'];
-            // foreach ($roles as $role) {
-            //     Role::create([
-            //         'name' => $role
-            //     ]);
-            // }
-            // Employe::create([
-            //     'email' => 'admin@gmail.com',
-            //     'password' => Hash::make('admin'),
-            //     'name' => 'Admin',
-            //     'role_id' => 1,
-            //     'address' => 'Rombasan Pragaan Sumenep',
-            //     'gender' => 'Laki-laki',
-            //     'phone' => '082233445566',
-            //     'thumbnail' => null
-            // ]);
+            $roles = ['Admin', 'Ketua', 'Wakil Ketua', 'Bendahara', 'Sekretaris', 'Pembina'];
+            foreach ($roles as $role) {
+                Role::create([
+                    'name' => $role
+                ]);
+            }
+            Employe::create([
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin'),
+                'name' => 'Admin',
+                'role_id' => 1,
+                'address' => 'Rombasan Pragaan Sumenep',
+                'gender' => 'Laki-laki',
+                'phone' => '082233445566',
+                'thumbnail' => null
+            ]);
             $this->call([
                 saving_categories::class,
                 // saving::class,

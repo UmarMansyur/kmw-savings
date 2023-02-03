@@ -39,13 +39,13 @@
             </li>
             <li class="menu-label mt-3">Data</li>
             <li class="mb-2">
-                <a href="javascript: void(0);">
+                <a href="/admin/saving">
                     <i data-feather="credit-card" class="align-self-start menu-icon"></i>
                     <span style="font-size: 14px">Tabungan</span>
                 </a>
             </li>
             <li>
-                <a href="javascript: void(0);">
+                <a href="/admin/report">
                     <i data-feather="file-text" class="align-self-start menu-icon"></i>
                     <span style="font-size: 14px">Laporan</span>
                 </a>

@@ -135,4 +135,15 @@ class Member extends Controller
             return redirect('/admin/setting/jamaah');
         }
     }
+
+    public function detail($id) {
+        try {
+            $member = MemberModel::find($id)::with('saving_category')->first();
+            // return view('admin.settings.members.detail', compact('member'));
+            return view('admin.settings.members.detail');
+        } catch (\Throwable $th) {
+            notify()->error($th->getMessage());
+            return redirect('admin.settings.members.index');
+        }
+    }
 }

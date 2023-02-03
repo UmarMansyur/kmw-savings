@@ -15,4 +15,8 @@ class Saving extends Model
         'saldo',
         'debit'
     ];
+
+    public function member() {
+        return $this->hasMany(Member::class, 'id', 'member_id');
+    }
 }

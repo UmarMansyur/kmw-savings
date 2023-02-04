@@ -44,7 +44,7 @@ class Saving extends Controller
 
     public function storeDeposit($id) {
         try {
-            $saldo = DB::select("SELECT SUM(debit) as saldo FROM savings WHERE member_id = $id order by id desc limit 1")[0]->saldo;
+            $saldo = DB::select("SELECT SUM(debit) as saldo FROM savings WHERE member_id = $id GROUP BY member_id order by id desc limit 1")[0]->saldo;
             $save = new ModelsSaving();
             $save->member_id = $id;
             $save->debit = request('debit');

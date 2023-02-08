@@ -25,14 +25,12 @@ class Employe extends Controller
             $employe = EmployeModel::find(request('id'))::with('role')->first();
             return view('admin.settings.employes.employe', compact('employe', 'roles'));
         }
-
         return view('admin.settings.employes.employe', compact('roles'));
     }
 
     public function store()
     {
         try {
-            // dd(request()->file('photo')->getClientOriginalName());
             $employe = new EmployeModel;
             $employe->name = request('name');
             $employe->email = request('email');
@@ -59,18 +57,18 @@ class Employe extends Controller
             return redirect('/admin/setting/karyawan');
         } catch (\Throwable $th) {
             notify()->error($th->getMessage());
-            dd($th->getMessage());
-            // return redirect('/admin/setting/karyawan');
+            return redirect('/admin/setting/karyawan');
         }
     }
 
     public function update($id)
     {
         try {
-            // dd(request()->all());
+
             $employe = EmployeModel::find($id);
             $employe->name = request('name') ?? $employe->name;
             $employe->email = request('email') ?? $employe->email;
+
             if (request('password') != request('password_confirmation')) {
                 notify()->error('Password tidak sama');
                 return redirect('/admin/setting/add-karyawan?id=' . $employe->id . '');
@@ -81,10 +79,12 @@ class Employe extends Controller
                     $employe->password = $employe->password;
                 }
             }
+
             $employe->role_id = request('role') ?? $employe->role;
             $employe->address = request('address') ?? $employe->address;
             $employe->gender = request('gender') ?? $employe->gender;
             $employe->phone = request('phone') ?? $employe->phone;
+
             if (request()->file('photo')) {
                 $file = request()->file('photo');
                 Storage::delete('/public/employes/images/' . $employe->thumbnail);
@@ -95,11 +95,14 @@ class Employe extends Controller
             } else {
                 $employe->thumbnail = $employe->thumbnail;
             }
+
             $employe->save();
+
             notify()->success('Berhasil mengubah karyawan');
             return redirect('/admin/setting/karyawan');
         } catch (\Throwable $th) {
             notify()->error($th->getMessage());
+            dd($th);
             return redirect('/admin/setting/karyawan');
         }
     }

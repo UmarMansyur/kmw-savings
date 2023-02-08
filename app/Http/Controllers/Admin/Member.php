@@ -48,7 +48,7 @@ class Member extends Controller
                 notify()->error('Password tidak sama');
                 return redirect('/admin/setting/add-jamaah');
             } else {
-                $member->password = Hash::make(request('password'));
+                $member->password = request('password');
             }
             $member->address = request('address');
             $member->gender = request('gender');
@@ -96,19 +96,16 @@ class Member extends Controller
     public function update($id)
     {
         try {
+
+            // dd(request()->all());
             $member = MemberModel::find($id);
             $member->name = request('name');
             $member->email = request('email');
             if (request('password') != request('password_confirmation')) {
                 notify()->error('Password tidak sama');
                 return redirect('/admin/setting/add-jamaah');
-            } else {
-                if (request('password')) {
-                    $member->password = Hash::make(request('password'));
-                } else {
-                    $member->password = $member->password;
-                }
             }
+            $member->password = request('password') ? request('password') : $member->password;
             $member->saving_category_id = request('saving_categories');
             $member->address = request('address');
             $member->gender = request('gender');

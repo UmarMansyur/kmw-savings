@@ -28,13 +28,38 @@
                     <div class="col-6 col-md-3 col-xxl-3 col-sm-3 col-lg-3 col-xl-3 float-end">
                         <select name="typeReport" id="typeReport" class="form-select">
                             <option value="" class="text-center">--- Pilih Jenis Perekapan ---</option>
-                            <option value="1">Harian</option>
-                            <option value="2">Bulanan</option>
-                            <option value="3">Tahunan</option>
+                            <option value="1" {{ request()->get('type') == 'harian' ? 'selected' : '' }}>Harian</option>
+                            <option value="2" {{ request()->get('type') == 'bulanan' ? 'selected' : '' }}>Bulanan
+                            </option>
+                            <option value="3" {{ request()->get('type') == 'tahunan' ? 'selected' : '' }}>Tahunan
+                            </option>
                         </select>
 
                     </div>
-                    
+
+                    <div class="col text-end">
+                        @if (request()->get('type') == 'harian')
+                        <a target="_blank" href="/user/report/print?type=harian" class="btn btn-dark">
+                            <i class="fas fa-print"></i>
+                            Cetak
+                        </a>
+                        @elseif (request()->get('type') == 'bulanan')
+                        <a target="_blank" href="/user/report/print?type=bulanan" class="btn btn-dark">
+                            <i class="fas fa-print"></i>
+                            Cetak
+                        </a>
+                        @elseif (request()->get('type') == 'tahunan')
+                        <a target="_blank" href="/user/report/print?type=tahunan" class="btn btn-dark">
+                            <i class="fas fa-print"></i>
+                            Cetak
+                        </a>
+                        @else
+                        <a target="_blank" href="/user/report/print" class="btn btn-dark">
+                            <i class="fas fa-print"></i>
+                            Cetak
+                        </a>
+                        @endif
+                    </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-12">
@@ -59,11 +84,11 @@
                                     <tr>
                                         <th class="text-center">{{ $loop->iteration }}</th>
                                         @if (request()->get('type') == 'harian')
-                                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                         @elseif (request()->get('type') == 'bulanan')
-                                            <td>{{ $item->bulan . '-' . $item->year }}</td>
+                                        <td>{{ $item->bulan . '-' . $item->year }}</td>
                                         @elseif (request()->get('type') == 'tahunan')
-                                            <td class="text-center">{{ $item->year }}</td>
+                                        <td class="text-center">{{ $item->year }}</td>
                                         @else
                                         <td class="text-center">{{ $item->created_at->format('d-m-Y') }}</td>
                                         @endif

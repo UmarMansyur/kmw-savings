@@ -44,7 +44,8 @@
         }
     });
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBFE3bMCvOX5Ny5PrSqFF1t5Nn0y2cMNH8">
+<script
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBFE3bMCvOX5Ny5PrSqFF1t5Nn0y2cMNH8">
 </script>
 <script>
     if ($(location).attr('pathname') == '/admin/setting/add-karyawan' || $(location).attr('pathname') == '/admin/setting/add-jamaah') {
@@ -73,12 +74,27 @@
 <script>
     if($(location).attr('pathname') == '/admin/report' || $(location).attr('pathname') == '/user/report') {
         document.getElementById('typeReport').addEventListener('change', function() {
-            if(this.value == 1) {
-                document.location.href = '/admin/report?type=harian';
-            } else if(this.value == 2) {
-                document.location.href = '/admin/report?type=bulanan';
-            } else if(this.value == 3) {
-                document.location.href = '/admin/report?type=tahunan';
+
+            if($(location).attr('pathname') == '/user/report') {
+                if(this.value == 1) {
+                    document.location.href = '/user/report?type=harian';
+                    docoment.getElementById('typeReport').value = 1
+                } else if(this.value == 2) {
+                    document.location.href = '/user/report?type=bulanan';
+                    docoment.getElementById('typeReport').value = 2 
+
+                } else if(this.value == 3) {
+                    document.location.href = '/user/report?type=tahunan';
+                    docoment.getElementById('typeReport').value = 3
+                }
+            } else {
+                if(this.value == 1) {
+                    document.location.href = '/admin/report?type=harian';
+                } else if(this.value == 2) {
+                    document.location.href = '/admin/report?type=bulanan';
+                } else if(this.value == 3) {
+                    document.location.href = '/admin/report?type=tahunan';
+                }
             }
         });
     }

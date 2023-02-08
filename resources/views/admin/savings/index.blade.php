@@ -54,19 +54,27 @@
                                         <td> {{ $member->address }} </td>
                                         <td> {{ ucfirst($member->category) }} </td>
                                         @isset($member->saldo)
-                                        <td class="{{ $member->saldo > $member->batas ? 'text-success' : 'text-danger' }}">
+                                        <td
+                                            class="{{ $member->saldo >= $member->batas ? 'text-success' : 'text-danger' }}">
                                             Rp. {{ number_format($member->saldo, 0, ',', '.')}}
                                         </td>
                                         @else
                                         <td>Rp. 0</td>
                                         @endisset
                                         <td class="text-center">
-                                            <a href="/admin/saving/preview/{{$member->id}}" class="btn btn-outline-primary btn-sm">
+                                            <a href="/admin/saving/preview/{{$member->id}}"
+                                                class="btn btn-outline-primary btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
+
                                         <td class="text-center">
-                                            <a href="/admin/saving/deposit/{{$member->id}}" class="btn btn-success btn-sm">Setor</a>
+                                            @if ($member->saldo >= $member->batas)
+                                            <a href="#" class="btn btn-secondary btn-sm disabled">Setor</a>
+                                            @else
+                                            <a href="/admin/saving/deposit/{{$member->id}}"
+                                                class="btn btn-success btn-sm">Setor</a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

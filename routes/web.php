@@ -56,8 +56,12 @@ Route::middleware(['admin'])->group(function() {
     Route::post('/admin/saving/deposit/{id}', [Saving::class, 'storeDeposit']);
 
     Route::get('/admin/report', [Report::class, 'index']);
+    Route::get('/admin/report/print', [Report::class, 'print']);
 
 });
 
-Route::get('/user/dashboard', [DashboardUser::class, 'index']);
-Route::get('/user/report', [ReportUser::class, 'index']);
+Route::middleware(['user'])->group(function() {
+    Route::get('/user/dashboard', [DashboardUser::class, 'index']);
+    Route::get('/user/report', [ReportUser::class, 'index']);
+    Route::get('/user/report/print', [ReportUser::class, 'cetak']);
+});

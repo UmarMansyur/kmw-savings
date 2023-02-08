@@ -16,15 +16,15 @@
         <ul class="metismenu left-sidenav-menu">
             <li>
                 <div class="text-center">
-                    @if(isset(Auth::user()->thumbnail))
+                    @if(!empty(Auth::user()->thumbnail))
                     <div class="mt-3">
                         <img src="{{ url('/storage/employes/images/' . Auth::user()->thumbnail) }}" alt="" class="rounded-circle d-block mx-auto mb-3" height="140" width="140" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     </div>
-                    @elseif(empty(Auth::user()->thumbnail))
+                    @elseif(empty(Auth::user()->thumbnail) && empty(request()->session()->get('user')[0]->thumbnail))
                     <img src="{{ url('/images/default.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
-                    @elseif(request()->session()->get('user')[0]->thumbnail)
+                    @elseif((request()->session()->get('user')[0]->thumbnail))
                     <img src="{{ url('/storage/members/images/' . request()->session()->get('user')[0]->thumbnail) }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
-                    @elseif(request()->session()->get('user')[0]->thumbnail == null)
+                    @elseif(empty(request()->session()->get('user')[0]->thumbnail))
                     <img src="{{ url('/images/default.jpg') }}" alt="" height="140" width="140" class="rounded-circle d-block mx-auto mb-3" style="border: 5px solid white; object-fit: cover; object-position: top;">
                     @endisset
                     <span class="text-white" style="font-size: 20px; font-weight:700;">{{ Auth::user() ? Auth::user()->name : request()->session()->get('user')[0]->name  }}</span>

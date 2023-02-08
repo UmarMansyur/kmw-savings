@@ -45,6 +45,11 @@ class Saving extends Controller
     public function storeDeposit($id) {
         try {
             $saldo = DB::select("SELECT SUM(debit) as saldo FROM savings WHERE member_id = $id GROUP BY member_id order by id desc limit 1")[0]->saldo;
+            $limit = DB::select("SELECT saving_categories.limit as batas FROM members JOIN saving_categories ON members.saving_category_id = saving_categories.id WHERE members.id = $id")[0]->batas;
+            if ($saldo + request('debit') > $limit) {
+                notify()->error('Deposit melebihi batas', 'Gagal');
+                return redirect('/admin/saving');
+            }
             $save = new ModelsSaving();
             $save->member_id = $id;
             $save->debit = request('debit');

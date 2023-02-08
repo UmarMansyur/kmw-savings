@@ -25,14 +25,12 @@ class Employe extends Controller
             $employe = EmployeModel::find(request('id'))::with('role')->first();
             return view('admin.settings.employes.employe', compact('employe', 'roles'));
         }
-
         return view('admin.settings.employes.employe', compact('roles'));
     }
 
     public function store()
     {
         try {
-            // dd(request()->file('photo')->getClientOriginalName());
             $employe = new EmployeModel;
             $employe->name = request('name');
             $employe->email = request('email');
@@ -99,7 +97,7 @@ class Employe extends Controller
             }
 
             $employe->save();
-            
+
             notify()->success('Berhasil mengubah karyawan');
             return redirect('/admin/setting/karyawan');
         } catch (\Throwable $th) {
